@@ -9,7 +9,7 @@
 /** ********** Waybar Window ********** **/
 window#waybar {
     background-color: @base;
-    color: @base;
+    color: @surface1;
     border-bottom: 2px solid @mantle;
     transition-property: background-color;
     transition-duration: .5s;

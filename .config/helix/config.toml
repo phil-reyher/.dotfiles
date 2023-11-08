@@ -5,8 +5,6 @@ theme = "catppuccin_macchiato"
 bufferline = "multiple"
 # Highlight all lines with a cursor
 cursorline = true
-# Use relative line numbers
-line-number = "relative"
 # Show a ruler at column 120
 rulers = [120]
 # Force the theme to show colors
