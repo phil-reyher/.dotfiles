@@ -1,8 +1,8 @@
 * {
 	border: none;
 	border-radius: 10;
-  font-family: Iosevka,Symbols Nerd Font Mono;
-	font-size: 14px;
+    font-family: "JetbrainsMono Nerd Font" ;
+	font-size: 15px;
 	min-height: 10px;
 }
 
@@ -20,7 +20,7 @@ window#waybar.hidden {
 	padding-right: 10px;
 	border-radius: 10px;
 	transition: none;
-  color: transparent;
+    color: transparent;
 	background: transparent;
 }
 #tags {
@@ -29,13 +29,13 @@ window#waybar.hidden {
 	font-size: 4px;
 	margin-bottom: 0px;
 	border-radius: 10px;
-	background: @base;
+	background: #161320;
 	transition: none;
 }
 
 #tags button {
 	transition: none;
-	color: @teal;
+	color: #B5E8E0;
 	background: transparent;
 	font-size: 16px;
 	border-radius: 2px;
@@ -43,28 +43,28 @@ window#waybar.hidden {
 
 #tags button.occupied {
 	transition: none;
-	color: @maroon;
+	color: #F28FAD;
 	background: transparent;
 	font-size: 4px;
 }
 
 #tags button.focused {
-	color: @green;
-    border-top: 2px solid @green;
-    border-bottom: 2px solid @green;
+	color: #ABE9B3;
+    border-top: 2px solid #ABE9B3;
+    border-bottom: 2px solid #ABE9B3;
 }
 
 #tags button:hover {
 	transition: none;
 	box-shadow: inherit;
 	text-shadow: inherit;
-	color: @yellow;
-    border-color: @pink;
-    color: @pink;
+	color: #FAE3B0;
+    border-color: #E8A2AF;
+    color: #E8A2AF;
 }
 
 #tags button.focused:hover {
-    color: @pink;
+    color: #E8A2AF;
 }
 
 #network {
@@ -79,7 +79,7 @@ window#waybar.hidden {
 	background: #bd93f9;
 }
 
-#pipewire {
+#pulseaudio {
 	margin-top: 6px;
 	margin-left: 8px;
 	padding-left: 10px;
@@ -90,6 +90,34 @@ window#waybar.hidden {
 	color: #1A1826;
 	background: #FAE3B0;
 }
+
+#battery {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 0px;
+	border-radius: 10px;
+	transition: none;
+	color: #161320;
+	background: #B5E8E0;
+}
+
+#battery.charging, #battery.plugged {
+	color: #161320;
+    background-color: #B5E8E0;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #B5E8E0;
+    color: #161320;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
 @keyframes blink {
     to {
         background-color: #BF616A;
@@ -118,6 +146,7 @@ window#waybar.hidden {
 	transition: none;
 	color: #161320;
 	background: #ABE9B3;
+	/*background: #1A1826;*/
 }
 
 #memory {
