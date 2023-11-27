@@ -1,160 +1,218 @@
-@import "macchiato.css";
-
-/** ********** Fonts ********** **/
 * {
-    font-family:   "RobotoMono","Symbols Nerd Font";
-    font-size: 12px;
+	border: none;
+	border-radius: 10;
+  font-family: Iosevka,Symbols Nerd Font Mono;
+	font-size: 14px;
+	min-height: 10px;
 }
 
-/** ********** Waybar Window ********** **/
 window#waybar {
-    background-color: @base;
-    color: @surface1;
-    border-bottom: 2px solid @mantle;
-    transition-property: background-color;
-    transition-duration: .5s;
+	background: transparent;
 }
 
 window#waybar.hidden {
-    opacity: 0.5;
+	opacity: 0.2;
 }
 
-/** ********** Backlight ********** **/
-#backlight {
-	background-color: @mauve;
+#window {
+	margin-top: 6px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-radius: 10px;
+	transition: none;
+  color: transparent;
+	background: transparent;
+}
+#tags {
+	margin-top: 6px;
+	margin-left: 12px;
+	font-size: 4px;
+	margin-bottom: 0px;
+	border-radius: 10px;
+	background: @base;
+	transition: none;
 }
 
+#tags button {
+	transition: none;
+	color: @teal;
+	background: transparent;
+	font-size: 16px;
+	border-radius: 2px;
+}
+
+#tags button.occupied {
+	transition: none;
+	color: @maroon;
+	background: transparent;
+	font-size: 4px;
+}
+
+#tags button.focused {
+	color: @green;
+    border-top: 2px solid @green;
+    border-bottom: 2px solid @green;
+}
+
+#tags button:hover {
+	transition: none;
+	box-shadow: inherit;
+	text-shadow: inherit;
+	color: @yellow;
+    border-color: @pink;
+    color: @pink;
+}
+
+#tags button.focused:hover {
+    color: @pink;
+}
+
+#network {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 0px;
+	border-radius: 10px;
+	transition: none;
+	color: #161320;
+	background: #bd93f9;
+}
+
+#pipewire {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 0px;
+	border-radius: 10px;
+	transition: none;
+	color: #1A1826;
+	background: #FAE3B0;
+}
 @keyframes blink {
     to {
-        color: #000000;
+        background-color: #BF616A;
+        color: #B5E8E0;
     }
 }
 
-/** ********** Clock ********** **/
-#clock {
-	background-color: @green;
-}
-
-/** ********** CPU ********** **/
-#cpu {
-	background-color: @teal;
-}
-
-/** ********** Memory ********** **/
-#memory {
-	background-color: @maroon;
-}
-
-/** ********** Disk ********** **/
-#disk {
-	background-color: @lavender;
-}
-
-/** ********** Tray ********** **/
-#tray {
-	background-color: @sapphire;
-}
-#tray > .passive {
-    -gtk-icon-effect: dim;
-}
-#tray > .needs-attention {
-    -gtk-icon-effect: highlight;
-}
-#tray > .active {
-}
-
-/** ********** MPD ********** **/
-#mpd {
-	background-color: #94e2d5;
-}
-
-#mpd.disconnected {
-	background-color: #f38ba8;
-}
-
-#mpd.stopped {
-	background-color: #f5c2e7;
-}
-
-#mpd.playing {
-	background-color: #74c7ec;
-}
-
-#mpd.paused {
-}
-
-/** ********** Pulseaudio ********** **/
-#wireplumber {
-	background-color: @peach;
-}
-
-#wireplumber.muted {
-	background-color: @red;
-}
-
-/** ********** Network ********** **/
-#network {
-	background-color: @blue;
-}
-
-#network.disconnected,#network.disabled {
-	background-color: @red;
-}
-#network.linked {
-}
-#network.ethernet {
-}
-#network.wifi {
-}
-
-/** ********** Custom ********** **/
-#custom-launcher, #custom-power, #custom-weather, #custom-updater {
+#backlight {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 0px;
 	border-radius: 10px;
-	margin: 6px 0px;
-	padding: 2px 8px;
+	transition: none;
+	color: #161320;
+	background: #F8BD96;
+}
+#clock {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 0px;
+	border-radius: 10px;
+	transition: none;
+	color: #161320;
+	background: #ABE9B3;
+}
+
+#memory {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	margin-bottom: 0px;
+	padding-right: 10px;
+	border-radius: 10px;
+	transition: none;
+	color: #161320;
+	background: #DDB6F2;
+}
+#cpu {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	margin-bottom: 0px;
+	padding-right: 10px;
+	border-radius: 10px;
+	transition: none;
+	color: #161320;
+	background: #96CDFB;
+}
+
+#tray {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	margin-bottom: 0px;
+	padding-right: 10px;
+	border-radius: 10px;
+	transition: none;
+	color: #B5E8E0;
+	background: #161320;
 }
 
 #custom-launcher {
-	background-color: @pink;
-	margin-left: 6px;
-	padding: 2px 8px;
-	font-size: 16px;
+	font-size: 24px;
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 5px;
+	border-radius: 10px;
+	transition: none;
+    color: #89DCEB;
+    background: #161320;
 }
 
 #custom-power {
-	background-color: @red;
-	margin-right: 6px;
-	padding: 2px 8px;
-	font-size: 16px;
-}
-
-#custom-updater {
-	background-color: @yellow;
-	margin-right: 6px;
-	padding: 2px 8px;
-	font-size: 12px;
-}
-
-#custom-weather {
-	background-color: @mauve;
-	margin-right: 0px;
-	padding: 2px 8px;
-	font-size: 12px;
-}
-
-/** Common style **/
-#backlight, 
-#battery,
-#clock,
-#cpu,
-#disk,
-#mode,
-#memory,
-#mpd,
-#tray,
-#wireplumber,
-#network {
+	font-size: 20px;
+	margin-top: 6px;
+	margin-left: 8px;
+	margin-right: 8px;
+	padding-left: 10px;
+	padding-right: 5px;
+	margin-bottom: 0px;
 	border-radius: 10px;
-	margin: 6px 0px;
-	padding: 2px 8px;
+	transition: none;
+	color: #161320;
+	background: #F28FAD;
+}
+
+#custom-wallpaper {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 0px;
+	border-radius: 10px;
+	transition: none;
+	color: #161320;
+	background: #C9CBFF;
+}
+
+#custom-updates {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 0px;
+	border-radius: 10px;
+	transition: none;
+	color: #161320;
+	background: #E8A2AF;
+}
+
+#custom-media {
+	margin-top: 6px;
+	margin-left: 8px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-bottom: 0px;
+	border-radius: 10px;
+	transition: none;
+	color: #161320;
+	background: #F2CDCD;
 }

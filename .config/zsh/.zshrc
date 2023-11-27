@@ -44,10 +44,24 @@ source "$ZPLUGINS/powerlevel10k/powerlevel10k.zsh-theme"
 #source aliases
 source $XDG_CONFIG_HOME/aliases/aliases
 
-
 # completion
 autoload -U compinit; compinit
 source "$ZPLUGINS/completion.zsh"
+
+#foot open new shell in same pwd
+function osc7-pwd() {
+    emulate -L zsh # also sets localoptions for us
+    setopt extendedglob
+    local LC_ALL=C
+    printf '\e]7;file://%s%s\e\' $HOST ${PWD//(#m)([^@-Za-z&-;_~])/%${(l:2::0:)$(([##16]#MATCH))}}
+}
+
+function chpwd-osc7-pwd() {
+    (( ZSH_SUBSHELL )) || osc7-pwd
+}
+add-zsh-hook -Uz chpwd chpwd-osc7-pwd
+
+
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
