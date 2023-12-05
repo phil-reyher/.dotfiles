@@ -1,4 +1,4 @@
-theme = "Catppuccin-macchiato"
+theme = "Catppuccin-mocha"
 client_id = "91d19ef8c9ac47f6955cb51f5422f639"
 client_port = 8080
 playback_format = """
@@ -21,6 +21,7 @@ enable_media_control = true
 enable_streaming = true
 enable_cover_image_cache = true
 default_device = "spotify-player"
+cover_img_scale=1.8
 
 [copy_command]
 command = "xclip"

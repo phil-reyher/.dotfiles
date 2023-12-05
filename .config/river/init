@@ -8,18 +8,11 @@
 # See the river(1), riverctl(1), and rivertile(1) man pages for complete
 # documentation.
 # Note: the "$mod" modifier is also known as Logo, GUI, Windows, Mod4, etc.
+riverctl spawn "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
+riverctl spawn "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 
 ###AUTOSTART
-killall -q waybar fnott udiskie swaybg
-# riverctl spawn "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
-# riverctl spawn "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
-riverctl spawn "swaybg -i ~/Pictures/puccin.jpg -m fill &"
-riverctl spawn "yambar &"
-riverctl spawn "fnott &"
-riverctl spawn "udiskie &"
-riverctl spawn "wl-paste --type text --watch cliphist store"
-riverctl spawn "wl-paste --type image --watch cliphist store"
-riverctl spawn "wl-clip-persist --clipboard both"
+riverctl spawn "~/.config/river/autostart.sh"
 
 ###KEYBINDINGS
 mod="Super"
@@ -110,9 +103,10 @@ done
 
 # $mod+0 to focus all tags
 # $mod+Shift+0 to tag focused view with all tags
-all_tags=$(((1 << 32) - 1))
-riverctl map normal $mod 0 set-focused-tags $all_tags
-riverctl map normal $mod+Shift 0 set-view-tags $all_tags
+
+# all_tags=$(((1 << 32) - 1))
+# riverctl map normal $mod 0 set-focused-tags $all_tags
+# riverctl map normal $mod+Shift 0 set-view-tags $all_tags
 
 # $mod+Space to toggle float
 riverctl map normal $mod Space toggle-float
@@ -160,18 +154,20 @@ do
 done
 
 # Set background and border color
-riverctl border-color-focused "0xcba6f7"
-riverctl border-color-unfocused "0x45475a"
+riverctl border-color-focused "0xcba6f7" #mauve
+riverctl border-color-unfocused "0x45475a" #surface1
+riverctl border-color-urgent "0xf38ba8" #red
 # Set keyboard repeat rate
 riverctl set-repeat 50 300
 
 # Make all views with an app-id that starts with "float" and title "foo" start floating.
-riverctl rule-add -app-id 'float*' -title 'foo' float
-
+riverctl float-filter-add title "float"
+riverctl float-filter-add title "popup"
+riverctl float-filter-add title "About Mozilla Firefox"
+riverctl float-filter-add app-id "org.pipewire.Helvum"
 # Make all views with app-id "bar" and any title use client-side decorations
-riverctl rule-add -app-id "bar" csd
 
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
 riverctl default-layout rivertile
-rivertile -view-padding 6 -outer-padding 6 &
+riverctl spawn "rivertile -view-padding 6 -outer-padding 6"
