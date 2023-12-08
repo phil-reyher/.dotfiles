@@ -1,0 +1,313 @@
+anchors:
+  #color anchors
+- &none      00000000
+- &rosewater f5e0dcff
+- &flamingo  f2cdcdff
+- &pink      f5c2e7ff
+- &mauve     cba6f7ff
+- &red       f38ba8ff
+- &maroon    eba0acff
+- &peach     fab387ff
+- &yellow    f9e2afff
+- &green     a6e3a1ff
+- &teal      94e2d5ff
+- &sky       89dcebff
+- &sapphire  74c7ecff
+- &blue      89b4faff
+- &lavender  b4befeff
+- &text      cdd6f4ff
+- &subtext1  bac2deff
+- &subtext0  a6adc8ff
+- &overlay2  9399b2ff
+- &overlay1  7f849cff
+- &overlay0  6c7086ff
+- &surface2  585b70ff
+- &surface2alpha  585b7066
+- &surface1  45475aff
+- &surface1alpha  45475a66
+- &surface0  313244ff
+- &base      1e1e2eff
+- &mantle    181825ff
+- &crust     11111bff
+- &spotify   1DB954ff
+- &x 00000000
+# font anchors
+- &font-main FantasqueSansM Nerd Font Propo:size=16
+- &font-smol FantasqueSansM Nerd Font Propo:size=14
+# Background blocks
+- &bgbase {background: {color: *surface1alpha}}
+- &bgfocus {background: {color: *surface2}}
+- &bgurgent {background: {color: *surface2alpha}}
+# Underlines
+- &linefocus {underline: {size: 2, color: *mauve}}
+- &linebase {underline: {size: 2, color: *surface1}}
+- &lineurgent {underline: {size: 2, color: *red}}
+- &linenetwork {underline: {size: 2, color: *green}}
+- &linevol {underline: {size: 2, color: *maroon}}
+- &linereources {underline: {size: 2, color: *peach}}
+- &lineclock {underline: {size: 2, color: *teal}}
+- &lineweather {underline: {size: 2, color: *yellow}}
+- &linedate {underline: {size: 2, color: *yellow}}
+- &line {underline: {size: 2, color: *text}}
+- &lineupdate {underline: {size: 2, color: *sapphire}}
+- &linespot {underline: {size: 2, color: *spotify}}
+bar:
+  height: 28
+  location: top
+  font: *font-main
+  spacing: 4
+  margin: 0
+  layer: bottom
+  border:
+    color: *surface1
+    bottom-width: 2
+  foreground: *text
+  background: *base
+  left:
+    - river:
+        anchors:
+          - base: &river_base
+              margin: 10
+              default: {string: {text: }}
+              conditions:
+                id == 1: {string: {text: 1}}  
+                id == 2: {string: {text: 2}}  
+                id == 3: {string: {text: 3}}  
+                id == 4: {string: {text: 4}}  
+                id == 5: {string: {text: 5}}  
+                id == 6: {string: {text: 6}}  
+                id == 7: {string: {text: 7}}  
+                id == 8: {string: {text: 8}}  
+                id == 9: {string: {text: 9}}  
+                id == 10: {string: {text: "scratchpad"}}  
+                id == 11: {string: {text: "work"}}  
+
+        content:
+          map:
+            on-click: 
+              left: sh -c "riverctl set-focused-tags $((1 << ({id} - 1)))"
+              right: sh -c "riverctl toggle-focused-tags $((1 << ({id} -1)))"
+              middle: sh -c "riverctl toggle-view-tags $((1 << ({id} -1)))"
+            conditions:
+              state == urgent:
+                map:
+                  <<: *river_base
+                  deco: *lineurgent
+              state == focused:
+                map:
+                  <<: *river_base
+                  deco: *linefocus
+              state == visible && ~occupied:
+                map:
+                  <<: *river_base
+              state == visible && occupied:
+                map:
+                  <<: *river_base
+              state == unfocused:
+                map:
+                  <<: *river_base
+              state == invisible && ~occupied: {empty: {}}
+              state == invisible && occupied:
+                map:
+                  <<: *river_base
+
+    - foreign-toplevel:
+        content:
+          map:
+            conditions:
+              ~activated: {empty: {}}
+              activated:
+                - string: {max: 50,text: "{app-id}", deco: *line, margin: 4}
+
+    # - river:
+    #     title: {string: {max: 50, text: "{title}"}}
+    #     content: 
+    #       map:
+    #         conditions:
+    #           ~occupied: {empty: {}}
+    #           focused:
+    #             string:
+    #               margin: 5
+    #               text: ""
+
+  center:
+    - script:
+        path: /home/phil/.config/yambar/scripts/media.sh
+        content:
+          map:
+            margin: 4
+            deco: *linespot
+            foreground: *spotify
+            on-click: 
+              left: /home/phil/.config/yambar/scripts/play_pause.sh
+              wheel-up: playerctl -p spotify_player previous
+              wheel-down: playerctl -p spotify_player next
+            conditions:
+              state:
+                  map:
+                    conditions:
+                     status == Paused:
+                      string: 
+                        text: "  {artist} - {title}"
+                     status == Playing:
+                       string:
+                        text: "  {artist} - {title}"
+              ~state:
+                 empty: {}
+              # - string:
+              #     margin: 4
+              #     deco: *linespot
+              #     text: "{status}"
+              #     foreground: *spotify
+              #     max: 50
+              #     on-click: 
+              #       right: foot spotify_player
+              #       left: /home/phil/.config/yambar/scripts/play_pause.sh
+              #       wheel-up: playerctl -p spotify_player previous
+              #       wheel-down: playerctl -p spotify_player next
+    # - script:
+    #     path: /usr/bin/playerctl
+    #     args:
+    #       - "--follow"
+    #       - "metadata"
+    #       - "p"
+    #       - "spotify_player"
+    #       - "-f"
+    #       - |
+    #         status|string|{{status}}
+    #         artist|string|{{artist}}
+    #         title|string|{{title}}
+    #     content:
+    #       map:
+    #         default: {empty: {}}
+    #         conditions:
+    #           status == Paused: {string: {text: "{artist} - {title}"}}
+    #           status == Playing:
+    #             string: {text: "{artist} - {title}"}
+
+  right:
+    - removables:
+        anchors:
+          drive: &drive { text:  , font: *font-main}
+          optical: &optical {text:  , font: *font-main}
+        spacing: 5
+        content:
+          map:
+            conditions:
+              ~mounted:
+                map:
+                  on-click: udisksctl mount -b {device}
+                  conditions:
+                    ~optical: [{string: *drive}, {string: {text: "{label}"}}]
+                    optical: [{string: *optical}, {string: {text: "{label}"}}]
+              mounted:
+                map:
+                  on-click: udisksctl unmount -b {device}
+                  conditions:
+                    ~optical:
+                      - string: {<<: *drive, deco: *lineurgent}
+                      - string: {text: "{label}"}
+                    optical:
+                      - string: {<<: *optical, deco: *lineurgent}
+                      - string: {text: "{label}"}
+    # - network:
+    #     name: enp5s0
+    #     content:
+    #       map:
+    #         conditions:
+    #           ~carrier: {empty: {}}
+    #           carrier:
+    #             map:
+    #               default: {string: {text: , font: *font-nerd, foreground: *text}}
+    #               conditions:
+    #                 state == up && ipv4 != "": {string: {text: , font: *font-nerd}}
+    - script:
+        path: ~/.config/yambar/scripts/pacman.sh
+        content:
+          map:
+            deco: *lineupdate
+            margin: 4
+            default: { string: { text: "{pacman} + {aur} = {pkg}", on-click: foot paru } }
+            conditions:
+              pkg == 0: {string: {text: no updates}}
+
+    - network:
+        name: wlan0
+        poll-interval: 1000
+        content:
+          map:
+            deco: *linenetwork
+            margin: 4
+            conditions:
+              state == down: {string: {text:  , font: *font-main, foreground: *text}}
+              state == up:
+                map:
+                  default:
+                    - string: {text: , font: *font-main, right-margin: 2}
+                    - string: {text: "{dl-speed:mb}/{ul-speed:mb} Mb/s"}
+
+                  conditions:
+                    ipv4 == "":
+                      - string: {text: , font: *font-main, foreground: *text, right-margin: 2}
+                      - string: {text: "{dl-speed:mb}/{ul-speed:mb} Mb/s", foreground: *text}
+    - pipewire:
+        content:
+          list:
+            deco: *linevol
+            margin: 4
+            items:
+              - map:
+                  conditions:
+                    type == "sink":
+                      map:
+                        on-click: 
+                          left: amixer -q sset Master toggle
+                          right: helvum
+                          wheel-up: amixer -q sset Master 5%+
+                          wheel-down: amixer -q sset Master 5%-
+                        conditions:
+                           muted: {string: {text: "󰖁", right-margin: 2}}
+                           ~muted:
+                            - ramp:
+                                tag: cubic_volume
+                                items:
+                                  - string: {text: ""}
+                                  - string: {text: ""}
+                                  - string: {text: ""}
+                            - string: {text: "{cubic_volume}%"}
+                    type == "source":
+                      map:
+                        on-click: 
+                          left: amixer -q sset Capture toggle
+                          wheel-up: amixer -q sset Capture 5%+
+                          wheel-down: amixer -q sset Capture 5%-
+                        conditions:
+                          muted: {string: {text: ""}}
+                          ~muted: 
+                            - string: {text: ""}
+                            - string: {text: "{cubic_volume}%"}
+    - clock:
+        content:
+          list:
+            deco: *linedate
+            margin: 4
+            items:
+            - string: {text: "", font: *font-smol}
+            - string: {text: "{date}"}
+    - clock:
+        time-format: "%H:%M %Z"
+        content:
+          list:
+            deco: *lineclock
+            margin: 4 
+            items:
+            - string: {text: ""}
+            - string: {text: "{time}"}
+
+    - label:
+        content:
+          string:
+            right-margin: 1
+            deco: *lineurgent
+            on-click: ~/.config/fuzzel/leave/leave.sh
+            text: "  "

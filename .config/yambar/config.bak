@@ -1,0 +1,225 @@
+anchors:
+  #color anchors
+- &none      00000000
+- &rosewater f4dbd6ff
+- &flamingo  f0c6c6ff
+- &pink      f5bde6ff
+- &mauve     c6a0f6ff
+- &red       ed8796ff
+- &maroon    ee99a0ff
+- &peach     f5a97fff
+- &yellow    eed49fff
+- &green     a6da95ff
+- &teal      8bd5caff
+- &sky       91d7e3ff
+- &sapphire  7dc4e4ff
+- &blue      8aadf4ff
+- &lavender  b7bdf8ff
+- &text      cad3f5ff
+- &subtext1  b8c0e0ff
+- &subtext0  a5adcbff
+- &overlay2  939ab7ff
+- &overlay1  8087a2ff
+- &overlay0  6e738dff
+- &surface2  5b6078ff
+- &surface2alpha  5b607866
+- &surface1  494d64ff
+- &surface1alpha  494d6466
+- &surface0  363a4fff
+- &base      24273aff
+- &mantle    1e2030ff
+- &crust     181926ff
+- &x 00000000
+# font anchors
+- &font-main Iosevka:pixelsize=15
+- &font-nerd Symbols Nerd Font Mono:pixelsize=14
+# Background blocks
+- &bgbase {background: {color: *surface1alpha}}
+- &bgfocus {background: {color: *surface2}}
+- &bgurgent {background: {color: *surface2alpha}}
+# Underlines
+- &linefocus {underline: {size: 2, color: *mauve}}
+- &linebase {underline: {size: 2, color: *surface1}}
+- &lineurgent {underline: {size: 2, color: *red}}
+- &linenetwork {underline: {size: 2, color: *green}}
+- &linevol {underline: {size: 2, color: *maroon}}
+- &linereources {underline: {size: 2, color: *peach}}
+- &lineclock {underline: {size: 2, color: *teal}}
+- &lineweather {underline: {size: 2, color: *yellow}}
+- &linedate {underline: {size: 2, color: *yellow}}
+- &line {underline: {size: 2, color: *text}}
+
+
+bar:
+  height: 28
+  location: top
+  font: *font-main
+  spacing: 4
+  margin: 0
+  layer: bottom
+  foreground: *text
+  background: *base
+  left:
+    - river:
+        anchors:
+          - base: &river_base
+              left-margin: 10
+              right-margin: 10 
+              default: {string: {text: , font: *font-main}}
+              conditions:
+                id == 1: {string: {text: 1, font: *font-main}}  
+                id == 2: {string: {text: 2, font: *font-main}}  
+                id == 3: {string: {text: 3, font: *font-main}}  
+                id == 4: {string: {text: 4, font: *font-main}}  
+                id == 5: {string: {text: 5, font: *font-main}}  
+                id == 6: {string: {text: 6, font: *font-main}}  
+                id == 7: {string: {text: 7, font: *font-main}}  
+                id == 8: {string: {text: 8, font: *font-main}}  
+                id == 9: {string: {text: 9, font: *font-main}}  
+                id == 10: {string: {text: "scratchpad", font: *font-main}}  
+                id == 11: {string: {text: "work", font: *font-main}}  
+
+        content:
+          map:
+            on-click: 
+              left: sh -c "riverctl set-focused-tags $((1 << ({id} - 1)))"
+              right: sh -c "riverctl toggle-focused-tags $((1 << ({id} -1)))"
+              middle: sh -c "riverctl toggle-view-tags $((1 << ({id} -1)))"
+            conditions:
+              state == urgent:
+                map:
+                  <<: *river_base
+                  deco: *lineurgent
+              state == focused:
+                map:
+                  <<: *river_base
+                  deco: *linefocus
+              state == visible && ~occupied:
+                map:
+                  <<: *river_base
+              state == visible && occupied:
+                map:
+                  <<: *river_base
+              state == unfocused:
+                map:
+                  <<: *river_base
+              state == invisible && ~occupied: {empty: {}}
+              state == invisible && occupied:
+                map:
+                  <<: *river_base
+
+  center: 
+    - foreign-toplevel:
+        content:
+          map:
+            conditions:
+              ~activated: {empty: {}}
+              activated:
+                - string: {max: 50,text: "{app-id}", deco: *line}
+    # - river:
+    #     title: {string: {max: 50, text: "{title}"}}
+    #     content: 
+    #       map:
+    #         conditions:
+    #           ~occupied: {empty: {}}
+    #           focused:
+    #             string:
+    #               margin: 5
+    #               text: ""
+
+  right:
+    - removables:
+        anchors:
+          drive: &drive { text: , font: *font-nerd}
+          optical: &optical {text: , font: *font-nerd}
+        spacing: 5
+        content:
+          map:
+            conditions:
+              ~mounted:
+                map:
+                  on-click: udisksctl mount -b {device}
+                  conditions:
+                    ~optical: [{string: *drive}, {string: {text: "{label}"}}]
+                    optical: [{string: *optical}, {string: {text: "{label}"}}]
+              mounted:
+                map:
+                  on-click: udisksctl unmount -b {device}
+                  conditions:
+                    ~optical:
+                      - string: {<<: *drive, deco: *lineurgent}
+                      - string: {text: "{label}"}
+                    optical:
+                      - string: {<<: *optical, deco: *lineurgent}
+                      - string: {text: "{label}"}
+    # - network:
+    #     name: enp5s0
+    #     content:
+    #       map:
+    #         conditions:
+    #           ~carrier: {empty: {}}
+    #           carrier:
+    #             map:
+    #               default: {string: {text: , font: *font-nerd, foreground: *text}}
+    #               conditions:
+    #                 state == up && ipv4 != "": {string: {text: , font: *font-nerd}}
+    - network:
+        name: wlan0
+        poll-interval: 1000
+        content:
+          map:
+            deco: *linenetwork
+            default: {string: {text: " ", font: *font-nerd, foreground: *text}}
+            conditions:
+              state == down: {string: {text: , font: *font-nerd, foreground: *text}} state == up:
+                map:
+                  default:
+                    - string: {text:  , font: *font-nerd}
+                    - string: {text: "{dl-speed:mb}/{ul-speed:mb} Mb/s"}
+
+                  conditions:
+                    ipv4 == "":
+                      - string: {text:  , font: *font-nerd, foreground: *text}
+                      - string: {text: "{dl-speed:mb}/{ul-speed:mb} Mb/s", foreground: *text}
+    - pipewire:
+        anchors:
+          volume: &volume
+            conditions:
+              muted: {string: {text: 󰝟}}
+              ~muted: {string: {text: "{linear_volume}%"}}
+        content:
+          list:
+            deco: *linevol
+            items:
+              - map:
+                  conditions:
+                    type == "sink":
+                      map:
+                        conditions:
+                          icon == "audio-headset-bluetooth":
+                            string: {text: "🎧  "}
+                        default:
+                          - ramp:
+                              tag: linear_volume
+                              items:
+                                - string: {text: ""}
+                                - string: {text: ""}
+                                - string: {text: ""}
+                    type == "source":
+                      - string: {text: " 🎙"}
+              - map:
+                  <<: *volume
+
+    - clock:
+        content:
+          - string: {text: " {date}", deco: *linedate}
+    - clock:
+        time-format: "%H:%M %Z"
+        content:
+          - string: {text: " {time}", deco: *lineclock}
+    - label:
+        content:
+          string:
+            on-click: ~/.config/fuzzel/leave/leave.sh
+            text: " "
+            font: *font-nerd

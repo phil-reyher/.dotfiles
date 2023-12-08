@@ -34,7 +34,7 @@ export HISTSIZE=10000                   # Maximum events for internal history
 export LIBSEAT_BACKEND="logind"
 
 # GTK
-export GTK_THEME='Catppuccin-Macchiato-Standard-Mauve-Dark:dark'
+export GTK_THEME='Catppuccin-Mocha-Standard-Mauve-Dark:dark'
 
 #emojis haha
 export BEMOJI_PICKER_CMD="/usr/bin/fuzzel --dmenu"

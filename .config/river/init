@@ -11,8 +11,6 @@
 riverctl spawn "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 riverctl spawn "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 
-###AUTOSTART
-riverctl spawn "~/.config/river/autostart.sh"
 
 ###KEYBINDINGS
 mod="Super"
@@ -22,6 +20,8 @@ riverctl map normal $mod D spawn "fuzzel"
 riverctl map normal $mod B spawn "firefox"
 riverctl map normal $mod V spawn "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy"
 
+###AUTOSTART
+riverctl spawn "~/.config/river/autostart.sh"
 
 # $mod+Q to close the focused view
 riverctl map normal $mod Q close

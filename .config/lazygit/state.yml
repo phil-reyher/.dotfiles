@@ -1,0 +1,13 @@
+lastupdatecheck: 0
+recentrepos:
+- /home/phil
+- /home/phil/projects/reyherio
+startuppopupversion: 5
+customcommandshistory:
+- git add btop
+- config add btop
+- git status
+- q
+- git remote add origin git@github.com:phil-reyher/newWebsite.git
+hidecommandlog: false
+ignorewhitespaceindiffview: false
