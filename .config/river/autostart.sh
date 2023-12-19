@@ -1,10 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
 
-killall -q yambar fnott udiskie wbg wl-paste wl-clip-persist
+killall -q  yambar fnott wbg wl-paste wl-clip-persist pipewire cliphist
+pipewire &
 wbg ~/Pictures/puccin.jpg &
 yambar &
 fnott &
-udiskie &
 wl-paste --type text --watch cliphist store &
 wl-paste --type image --watch cliphist store &
 wl-clip-persist --clipboard both &

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/sh
 
 # This is the example configuration file for river.
 #
@@ -8,9 +8,9 @@
 # See the river(1), riverctl(1), and rivertile(1) man pages for complete
 # documentation.
 # Note: the "$mod" modifier is also known as Logo, GUI, Windows, Mod4, etc.
-riverctl spawn "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
-riverctl spawn "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 
+# riverctl spawn "dbus-daemon --session --address=unix:path=$XDG_RUNTIME_DIR/bus"
+riverctl spawn "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 
 ###KEYBINDINGS
 mod="Super"
@@ -49,13 +49,24 @@ riverctl map normal $mod+Shift Comma send-to-output previous
 # $mod+Return to bump the focused view to the top of the layout stack
 # riverctl map normal $mod Return zoom
 
-# $mod+H and $mod+L to decrease/increase the main ratio of rivertile(1)
-riverctl map normal $mod H send-layout-cmd rivertile "main-ratio -0.05"
-riverctl map normal $mod L send-layout-cmd rivertile "main-ratio +0.05"
+# # $mod+H and $mod+L to decrease/increase the main ratio of rivertile(1)
+# riverctl map normal $mod H send-layout-cmd rivertile "main-ratio -0.05"
+# riverctl map normal $mod L send-layout-cmd rivertile "main-ratio +0.05"
 
-# $mod+Shift+H and $mod+Shift+L to increment/decrement the main count of rivertile(1)
-riverctl map normal $mod+Shift H send-layout-cmd rivertile "main-count +1"
-riverctl map normal $mod+Shift L send-layout-cmd rivertile "main-count -1"
+# # $mod+Shift+H and $mod+Shift+L to increment/decrement the main count of rivertile(1)
+# riverctl map normal $mod+Shift H send-layout-cmd rivertile "main-count +1"
+# riverctl map normal $mod+Shift L send-layout-cmd rivertile "main-count -1"
+
+
+# # Super+H and Super+L to decrease/increase the main ratio of kile
+riverctl map normal Super H send-layout-cmd kile "mod-main-ratio -0.05"
+riverctl map normal Super L send-layout-cmd kile "mod-main-ratio +0.05"
+
+# Super+Shift+H and Super+Shift+L to increment/decrement the main count of kile
+riverctl map normal Super+Shift H send-layout-cmd kile "mod-main-count +1"
+riverctl map normal Super+Shift L send-layout-cmd kile "mod-main-count -1"
+
+
 
 # $mod+Alt+{H,J,K,L} to move views
 riverctl map normal $mod+Alt H move left 100
@@ -169,5 +180,10 @@ riverctl float-filter-add app-id "org.pipewire.Helvum"
 
 # Set the default layout generator to be rivertile and start it.
 # River will send the process group of the init executable SIGTERM on exit.
-riverctl default-layout rivertile
-riverctl spawn "rivertile -view-padding 6 -outer-padding 6"
+
+# riverctl default-layout rivertile
+# riverctl spawn "rivertile -view-padding 3 -outer-padding 3"
+
+riverctl default-layout kile
+killall kile
+kile &

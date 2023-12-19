@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-[ "$(tty)" = "/dev/tty1" ] && exec river
+[ "$(tty)" = "/dev/tty1" ] && dbus-run-session river
 
 export XDG_SESSION_TYPE=wayland
 export XDG_SESSION_DESKTOP=river

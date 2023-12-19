@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-alias ls='ls --color=auto'
-alias grep='grep --color=auto'
-alias lazyconf='lazygit --git-dir=/home/phil/.myconf/ --work-tree=/home/phil'
-alias config='/usr/bin/git --git-dir=/home/phil/.myconf/ --work-tree=/home/phil'
-
-alias d='dirs -v'
-for index ({1..9}) alias "$index"="cd +${index}"; unset index

@@ -22,6 +22,13 @@ export MOZ_ENABLE_WAYLAND=1
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
+export GTK_THEME='Catppuccin-Mocha-Standard-Mauve-Dark:dark'
+
+#emojis haha
+export BEMOJI_PICKER_CMD="/usr/bin/fuzzel --dmenu"
+
+. "$HOME/.cargo/env"
+
 # ZSH
 export ZDOTDIR="$DOTFILES/zsh"
 export ZPLUGINS="$ZDOTDIR/plugins"
@@ -29,12 +36,3 @@ export ZSH_COMPDUMP="$HOME/.cache/zsh/zcompcache"
 export HISTFILE="$ZDOTDIR/.zhistory"    # History filepath
 export SAVEHIST=10000                   # Maximum events in history file
 export HISTSIZE=10000                   # Maximum events for internal history
-
-# LOGIND
-export LIBSEAT_BACKEND="logind"
-
-# GTK
-export GTK_THEME='Catppuccin-Mocha-Standard-Mauve-Dark:dark'
-
-#emojis haha
-export BEMOJI_PICKER_CMD="/usr/bin/fuzzel --dmenu"
