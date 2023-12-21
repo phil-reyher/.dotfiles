@@ -1,2 +1,2 @@
 # .dotfiles
-dotfiles from my arch
+dotfiles for void musl
