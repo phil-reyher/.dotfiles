@@ -11,7 +11,6 @@ export XDG_DATA_HOME=$HOME/.local/share
 export XDG_SESSION_TYPE=wayland
 export XDG_SESSION_DESKTOP=river
 export XDG_CURRENT_DESKTOP=river
-
 # editor
 export EDITOR="hx"
 export VISUAL="hx"
@@ -23,6 +22,7 @@ export MOZ_ENABLE_WAYLAND=1
 # PATH
 export PATH="$HOME/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.config/emacs/bin:$PATH"
 
 # STYLE 󰱫
 export GTK_THEME='Catppuccin-Mocha-Standard-Mauve-Dark:dark'
@@ -38,21 +38,13 @@ export BEMOJI_PICKER_CMD="/usr/bin/fuzzel --dmenu"
 #            ALIASES           #
 ################################
 
-alias lazyconf='lazygit --git-dir=/home/phil/.cfg/ --work-tree=/home/phil'
-alias config='/usr/bin/git --git-dir=/home/phil/.cfg/ --work-tree=/home/phil'
-
-alias d='dirs -v'
-
-alias rebootuefi='grub-reboot "UEFI Firmware Settings"'
-alias sudo='sudo '
-
-
+. ~/.config/alias
 
 ################################
 #           START WM           #
 ################################
 
-[ "$(tty)" = "/dev/tty1" ] && dbus-run-session river
+[ "$(tty)" = "/dev/tty1" ] && exec dbus-run-session -- river
 
 
 

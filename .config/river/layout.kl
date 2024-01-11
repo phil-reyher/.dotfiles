@@ -1,9 +1,16 @@
 const ver Vertical
 const hor Horizontal
 
+const vsplit (ver | hor Deck)
 
-const vsplit (ver | hor ([1 - 0.5] *hsplit))
-const hsplit (hor | ver ([1 - 0.5] *vsplit))
 
-# Preview
-const default vsplit 
+
+const ver Vertical
+const hor Horizontal
+
+const vsplit (ver | Full *hsplit)
+const hsplit (hor | Full *vsplit)
+
+const dwindle vsplit
+
+const default dwindle

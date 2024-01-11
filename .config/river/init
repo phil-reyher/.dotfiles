@@ -13,6 +13,7 @@
 
 riverctl spawn "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=river"
 
+
 ###KEYBINDINGS
 mod="Super"
 riverctl map normal $mod R spawn "$HOME/.config/river/init" #reload
@@ -50,22 +51,22 @@ riverctl map normal $mod+Shift Comma send-to-output previous
 # $mod+Return to bump the focused view to the top of the layout stack
 # riverctl map normal $mod Return zoom
 
-# $mod+H and $mod+L to decrease/increase the main ratio of rivertile(1)
+# # $mod+H and $mod+L to decrease/increase the main ratio of rivertile(1)
 riverctl map normal $mod H send-layout-cmd rivertile "main-ratio -0.05"
 riverctl map normal $mod L send-layout-cmd rivertile "main-ratio +0.05"
 
-# $mod+Shift+H and $mod+Shift+L to increment/decrement the main count of rivertile(1)
+# # $mod+Shift+H and $mod+Shift+L to increment/decrement the main count of rivertile(1)
 riverctl map normal $mod+Shift H send-layout-cmd rivertile "main-count +1"
 riverctl map normal $mod+Shift L send-layout-cmd rivertile "main-count -1"
 
 
-# # # Super+H and Super+L to decrease/increase the main ratio of kile
-# riverctl map normal Super H send-layout-cmd kile "mod-main-ratio -0.05"
-# riverctl map normal Super L send-layout-cmd kile "mod-main-ratio +0.05"
+# Super+H and Super+L to decrease/increase the main ratio of stacktile
+# riverctl map normal Super H send-layout-cmd stacktile "mod-main-ratio -0.05"
+# riverctl map normal Super L send-layout-cmd stacktile "mod-main-ratio +0.05"
 
-# # Super+Shift+H and Super+Shift+L to increment/decrement the main count of kile
-# riverctl map normal Super+Shift H send-layout-cmd kile "mod-main-count +1"
-# riverctl map normal Super+Shift L send-layout-cmd kile "mod-main-count -1"
+# Super+Shift+H and Super+Shift+L to increment/decrement the main count of stacktile
+# riverctl map normal Super+Shift H send-layout-cmd stacktile "mod-main-count +1"
+# riverctl map normal Super+Shift L send-layout-cmd stacktile "mod-main-count -1"
 
 
 
@@ -116,9 +117,7 @@ done
 # $mod+0 to focus all tags
 # $mod+Shift+0 to tag focused view with all tags
 
-# all_tags=$(((1 << 32) - 1))
-# riverctl map normal $mod 0 set-focused-tags $all_tags
-# riverctl map normal $mod+Shift 0 set-view-tags $all_tags
+all_tags=$(((1 << 32) - 1))
 
 # $mod+Space to toggle float
 riverctl map normal $mod Space toggle-float
@@ -176,6 +175,7 @@ riverctl set-repeat 50 300
 riverctl float-filter-add title "float"
 riverctl float-filter-add title "popup"
 riverctl float-filter-add title "About Mozilla Firefox"
+riverctl float-filter-add title "Write: (no subject) - Thunderbird"
 riverctl float-filter-add app-id "org.pipewire.Helvum"
 # Make all views with app-id "bar" and any title use client-side decorations
 
@@ -183,8 +183,25 @@ riverctl float-filter-add app-id "org.pipewire.Helvum"
 # River will send the process group of the init executable SIGTERM on exit.
 
 riverctl default-layout rivertile
-rivertile -view-padding 3 -outer-padding 3 &
+rivertile -view-padding 3 -outer-padding 3 -main-ratio 0.5 &
+#---- Layouts ------------------------------------------------------------------------------
+# riverctl map normal Super I spawn "$HOME/.config/river/layouts/stack.sh"
+# riverctl map normal Super O spawn "$HOME/.config/river/layouts/monocle.sh"
+# riverctl map normal Super P spawn "$HOME/.config/river/layouts/default.sh"
+# riverctl map normal Super+Shift R send-layout-cmd stacktile "reset"
 
-# riverctl default-layout kile
-# killall kile
-# kile &
+#---- Layout generator ---------------------------------------------------------------------
+# riverctl default-layout stacktile
+
+#---- Layout generator conf ----------------------------------------------------------------
+# stacktile --per-tag-config \
+#     --primary-sublayout columns \
+#     --primary-position left \
+#     --primary-count 1 \
+#     --primary-ratio 0.5 \
+#     --inner-padding 3 \
+#     --outer-padding 3 \
+#     --secondary-sublayout stack \
+#     --secondary-count 3 \
+#     --secondary-ratio 0.6 \
+#     --remainder-sublayout grid &

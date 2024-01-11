@@ -70,7 +70,7 @@ function _tide_detect_os_linux_cases -a file key
         case ubuntu
             printf %s\n  E95420 D4D4D4 # https://design.ubuntu.com/brand/
         case void
-            printf %s\n  FFFFFF 478061 # from https://alpha.de.repo.voidlinux.org/logos/void.svg
+            printf %s\n " " FFFFFF 478061 # from https://alpha.de.repo.voidlinux.org/logos/void.svg
         case '*'
             return 1
     end

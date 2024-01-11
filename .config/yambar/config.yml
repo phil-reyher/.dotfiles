@@ -32,8 +32,7 @@ anchors:
 - &spotify   1DB954ff
 - &x 00000000
 # font anchors
-- &font-main FantasqueSansM Nerd Font:size=16
-- &font-smol FantasqueSansM Nerd Font:size=14
+- &font-main Maple Mono:size=16,Symbols Nerd Font:size=16
 # Background blocks
 - &bgbase {background: {color: *surface1alpha}}
 - &bgfocus {background: {color: *surface2}}
@@ -148,10 +147,10 @@ bar:
                     conditions:
                      status == Paused:
                       string: 
-                        text: "    {artist} - {title}"
+                        text: "  {artist} - {title}"
                      status == Playing:
                        string:
-                        text: "    {artist} - {title}"
+                        text: "  {artist} - {title}"
               ~state:
                  empty: {}
               # - string:
@@ -227,7 +226,7 @@ bar:
           map:
             deco: *lineupdate
             margin: 4
-            default: { string: { text: "󰏔  {xbps}", on-click: foot sudo xbps-install -Su } }
+            default: { string: { text: "󰏔 {xbps}", on-click: foot sudo xbps-install -Su} }
             conditions:
               xbps == 0: {empty: {}}
 
@@ -243,12 +242,12 @@ bar:
               state == up:
                 map:
                   default:
-                    - string: {text: , font: *font-main, right-margin: 12}
+                    - string: {text: , font: *font-main, right-margin: 4}
                     - string: {text: "{dl-speed:mb}/{ul-speed:mb} Mb/s"}
 
                   conditions:
                     ipv4 == "":
-                      - string: {text: , font: *font-main, foreground: *text, right-margin: 12}
+                      - string: {text: , font: *font-main, foreground: *text, right-margin: 4}
                       - string: {text: "{dl-speed:mb}/{ul-speed:mb} Mb/s", foreground: *text}
     - pipewire:
         content:
@@ -271,9 +270,9 @@ bar:
                             - ramp:
                                 tag: cubic_volume
                                 items:
-                                  - string: {text: "", right-margin: 10}
-                                  - string: {text: "", right-margin: 10}
-                                  - string: {text: "", right-margin: 10}
+                                  - string: {text: "", right-margin: 4}
+                                  - string: {text: "", right-margin: 4}
+                                  - string: {text: "", right-margin: 4}
                             - string: {text: "{cubic_volume}%"}
                     type == "source":
                       map:
@@ -282,7 +281,7 @@ bar:
                           wheel-up: amixer -q sset Capture 5%+
                           wheel-down: amixer -q sset Capture 5%-
                         conditions:
-                          muted: {string: {text: "", right-margin: 6}}
+                          muted: {string: {text: "", right-margin: 0}}
                           ~muted: 
                             - string: {text: "", right-margin: 4}
                             - string: {text: "{cubic_volume}%"}
@@ -292,7 +291,7 @@ bar:
             deco: *linedate
             margin: 4
             items:
-            - string: {text: "", font: *font-smol, right-margin: 8}
+            - string: {text: "", font: *font-main, right-margin: 4}
             - string: {text: "{date}"}
     - clock:
         time-format: "%H:%M %Z"
@@ -301,13 +300,13 @@ bar:
             deco: *lineclock
             margin: 4 
             items:
-            - string: {text: "", right-margin: 10}
+            - string: {text: "", right-margin: 4}
             - string: {text: "{time}"}
 
     - label:
         content:
           string:
-            right-margin: 6
+            right-margin: 4
             deco: *lineurgent
             on-click: ~/.config/fuzzel/leave.sh
             text: "  "
