@@ -32,8 +32,6 @@ export BEMOJI_PICKER_CMD="/usr/bin/fuzzel --dmenu"
 
 . "$HOME/.cargo/env"
 
-
-
 ################################
 #            ALIASES           #
 ################################
