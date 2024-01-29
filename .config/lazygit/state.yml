@@ -3,10 +3,10 @@ recentrepos:
 - /home/phil
 startuppopupversion: 5
 customcommandshistory:
-- git add btop
-- config add btop
-- git status
-- q
 - git remote add origin git@github.com:phil-reyher/newWebsite.git
+- q
+- git status
+- config add btop
+- git add btop
 hidecommandlog: false
 ignorewhitespaceindiffview: false

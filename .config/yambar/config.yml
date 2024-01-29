@@ -306,7 +306,7 @@ bar:
     - label:
         content:
           string:
-            right-margin: 4
+            right-margin: 2
             deco: *lineurgent
             on-click: ~/.config/fuzzel/leave.sh
             text: "  "

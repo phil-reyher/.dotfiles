@@ -45,7 +45,6 @@ export BEMOJI_PICKER_CMD="/usr/bin/fuzzel --dmenu"
 [ "$(tty)" = "/dev/tty1" ] && exec dbus-run-session -- river
 
 
-
 ################################
 #        DROP INTO FISH        #
 ################################
