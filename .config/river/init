@@ -29,6 +29,8 @@ riverctl spawn "~/.config/river/autostart.sh"
 # $mod+Q to close the focused view
 riverctl map normal $mod Q close
 
+riverctl hide-cursor when-typing enable 
+
 # $mod+Shift+E to exit river
 riverctl map normal $mod+Shift E exit
 
